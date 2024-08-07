@@ -1,6 +1,19 @@
 .detail {
     flex: 1;
+    overflow-y: auto; /* Enable scrolling if content overflows */
+            /* Custom scrollbar styling */
+            &::-webkit-scrollbar {
+              width: 8px; /* Width of the vertical scrollbar */
+          }
   
+          &::-webkit-scrollbar-thumb {
+              background-color: rgba(255, 255, 255, 0.3); /* Color of the scrollbar handle */
+              border-radius: 4px; /* Rounded corners for the scrollbar handle */
+          }
+  
+          &::-webkit-scrollbar-track {
+              background-color: rgba(17, 25, 40, 0.5); /* Background color of the scrollbar track */
+          }
     .user {
       padding: 30px 20px;
       display: flex;
