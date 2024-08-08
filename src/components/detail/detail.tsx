@@ -1,13 +1,18 @@
-import { auth } from "../../lib/firebase";
+import { arrayRemove, arrayUnion, doc, updateDoc } from "firebase/firestore";
+import { useChatStore } from "../../lib/chatStore";
+import { auth, db } from "../../lib/firebase";
+import { useUserStore } from "../../lib/userStore";
 import "./detail.css";
+import { useState } from "react";
 
 const Details = () => {
+  const { currentUser } = useUserStore();
+  const { chatId, user } = useChatStore();
   return (
     <div className="detail">
       <div className="user">
-        <img src="./avatar.png" alt="User Avatar" />
-        <h2>Jane Doe</h2>
-        <p>Lorem ipsum dolor sit amet consectetur adipiscing elit.</p>
+      <img src={user?.avatar || "./avatar.png"} alt="" />
+      <h2>{user?.username}</h2>
       </div>
       <div className="info">
         <div className="option">
@@ -24,47 +29,10 @@ const Details = () => {
         </div>
         <div className="option">
           <div className="title">
-            <span>Shared Photos</span>
-            <img src="./arrowUp.png" alt="Toggle Shared Photos" />
-          </div>
-          <div className="photos">
-            <div className="photoItem">
-              <div className="photoDetail">
-                <img src="./plainbg.jpg" alt="Shared Photo" />
-                <span>Photo_2092024_png</span>
-              </div>
-              <img src="./camera.png" alt="Camera Icon" className="icon" />
-            </div>
-            <div className="photoItem">
-              <div className="photoDetail">
-                <img src="./plainbg.jpg" alt="Shared Photo" />
-                <span>Photo_2092024_png</span>
-              </div>
-              <img src="./camera.png" alt="Camera Icon" className="icon" />
-            </div>
-            <div className="photoItem">
-              <div className="photoDetail">
-                <img src="./plainbg.png" alt="Shared Photo" />
-                <span>Photo_2092024_png</span>
-              </div>
-              <img src="./camera.png" alt="Camera Icon" className="icon" />
-            </div>
-            <div className="photoItem">
-              <div className="photoDetail">
-                <img src="./plainbg.png" alt="Shared Photo" />
-                <span>Photo_2092024_png</span>
-              </div>
-              <img src="./camera.png" alt="Camera Icon" className="icon" />
-            </div>
-          </div>
-        </div>
-        <div className="option">
-          <div className="title">
             <span>Shared Files</span>
             <img src="./arrowUp.png" alt="Toggle Shared Files" />
           </div>
         </div>
-        <button>Block Users</button>
         <button className="logout" onClick={() => auth.signOut()}>Logout</button>
       </div>
     </div>

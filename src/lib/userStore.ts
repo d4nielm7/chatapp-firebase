@@ -1,7 +1,12 @@
 import { doc, getDoc } from "firebase/firestore";
 import { create } from "zustand";
 import { db } from "./firebase";
-import { User } from "firebase/auth";
+import { User as FirebaseUser } from "firebase/auth";
+
+// Define the extended User type
+interface User extends FirebaseUser {
+  id: string;
+}
 
 // Define the type for the user store
 type UserStore = {
@@ -25,7 +30,9 @@ export const useUserStore = create<UserStore>((set) => ({
       const docSnap = await getDoc(docRef);
 
       if (docSnap.exists()) {
-        set({ currentUser: docSnap.data() as User, isLoading: false });
+        // Explicitly set the id property here
+        const userData = { ...docSnap.data(), id: uid } as User;
+        set({ currentUser: userData, isLoading: false });
       } else {
         set({ currentUser: null, isLoading: false });
       }
